@@ -54,6 +54,7 @@ const posts = defineCollection({
     date: z.string(),
     readTime: z.string(),
     summary: z.string(),
+    draft: z.boolean().default(false),
     sections: z.array(z.object({
       type: z.enum(['h2', 'p', 'code', 'ul']),
       content: z.union([z.string(), z.array(z.string())]),
