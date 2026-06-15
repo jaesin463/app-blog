@@ -14,7 +14,7 @@ export function CategoryBadge({ category, isDark }: { category: string; isDark: 
   const color = isDark ? (DARK_CATEGORY_META[category] ?? meta.color) : meta.color;
   return (
     <span
-      className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium"
+      className="inline-flex shrink-0 whitespace-nowrap items-center gap-1 px-2 py-0.5 rounded text-xs font-medium"
       style={{ color, background: color + "18", fontFamily: "'JetBrains Mono', monospace" }}
     >
       {meta.icon}
