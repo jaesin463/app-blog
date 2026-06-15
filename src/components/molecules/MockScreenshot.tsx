@@ -58,7 +58,7 @@ export function MockScreenshot({ accent, label, index, src, alt }: { accent: str
         style={{ background: `linear-gradient(135deg, ${accent}22, ${accent}08)`, border: `1px solid ${accent}30` }}
       >
         {src ? (
-          <img src={src} alt={alt ?? label} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+          <img src={src} alt={alt ?? label} className="absolute inset-0 h-full w-full object-contain" loading="lazy" />
         ) : (
           <div className="absolute inset-0 flex flex-col">
             <div className="flex items-center justify-between px-3 py-1.5" style={{ borderBottom: `1px solid ${accent}20` }}>

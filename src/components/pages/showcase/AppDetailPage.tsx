@@ -9,7 +9,7 @@ import type { AppItem, BlogPost, Page } from "../../../features/showcase/types";
 import { PaginationControls } from "../../atoms/PaginationControls";
 import { CategoryBadge, ChangeIcon, PlatformIcon, RequestStatusBadge, StatusDot, TechChip, VersionBadge } from "../../atoms/showcaseBadges";
 import { AppCard } from "../../molecules/AppCard";
-import { MockScreenshot } from "../../molecules/MockScreenshot";
+import { ScreenshotCarousel } from "../../molecules/ScreenshotCarousel";
 import { APPS, BLOG_POSTS, PATCH_NOTES } from "./showcasePageData";
 // ─── APP DETAIL PAGE ────────────────────────────────────────────────────────
 
@@ -87,11 +87,7 @@ export function AppDetailPage({ app, isDark, onBack, onGoApps }: {
           {/* Screenshots */}
           <section>
             <h2 className="text-base font-semibold text-foreground mb-4">스크린샷</h2>
-            <div className="grid grid-cols-3 gap-3">
-              {app.screenshots.map((sc, i) => (
-                <MockScreenshot key={i} accent={sc.accent} label={sc.label} index={i} src={sc.src} alt={sc.alt} />
-              ))}
-            </div>
+            <ScreenshotCarousel screenshots={app.screenshots} />
           </section>
 
           {/* Features */}
