@@ -11,35 +11,57 @@ interface AppShowcaseTemplateProps {
   apps?: AppItem[];
   patchNotes?: PatchNote[];
   posts?: BlogPost[];
+  initialPage?: Page;
+  selectedApp?: AppItem | null;
+  selectedPost?: BlogPost | null;
 }
 
-export default function App({ apps, patchNotes, posts }: AppShowcaseTemplateProps) {
+const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function pathForPage(page: Page) {
+  const pathMap: Partial<Record<Page, string>> = {
+    home: "/",
+    apps: "/apps/",
+    patchnotes: "/patch-notes/",
+    request: "/request/",
+    blog: "/blog/",
+    about: "/about/",
+  };
+  return `${BASE_PATH}${pathMap[page] ?? "/"}`;
+}
+
+function pathForApp(app: AppItem) {
+  const slug = app.slug ?? app.name.toLowerCase().replace(/\s+/g, "-");
+  return `${BASE_PATH}/apps/${slug}/`;
+}
+
+function pathForPost(post: BlogPost) {
+  const slug = post.slug ?? String(post.id);
+  return `${BASE_PATH}/posts/${slug}/`;
+}
+
+export default function App({ apps, patchNotes, posts, initialPage = "home", selectedApp: initialSelectedApp = null, selectedPost: initialSelectedPost = null }: AppShowcaseTemplateProps) {
   setShowcasePageData({ apps, patchNotes, posts });
 
-  const [page, setPage] = useState<Page>("home");
+  const [page] = useState<Page>(initialPage);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
-  const [selectedApp, setSelectedApp] = useState<AppItem | null>(null);
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [selectedApp] = useState<AppItem | null>(initialSelectedApp);
+  const [selectedPost] = useState<BlogPost | null>(initialSelectedPost);
 
   function navigate(p: Page) {
-    setPage(p);
     setMobileOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.location.href = pathForPage(p);
   }
 
   function goToApp(app: AppItem) {
-    setSelectedApp(app);
-    setPage("app-detail");
     setMobileOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.location.href = pathForApp(app);
   }
 
   function goToPost(post: BlogPost) {
-    setSelectedPost(post);
-    setPage("blog-post");
     setMobileOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.location.href = pathForPost(post);
   }
 
   return (

@@ -22,6 +22,7 @@ export interface AppItem {
   features: string[];
   techDetail: string;
   screenshots: { label: string; accent: string; src?: string; alt?: string }[];
+  slug?: string;
 }
 
 export interface PatchNote {
@@ -54,4 +55,5 @@ export interface BlogPost {
   readTime: string;
   summary: string;
   sections: { type: "h2" | "p" | "code" | "ul"; content: string | string[] }[];
+  slug?: string;
 }

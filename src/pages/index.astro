@@ -1,42 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
+import ShowcasePage from '../layouts/ShowcasePage.astro';
 import AppShowcaseTemplate from '../components/templates/AppShowcaseTemplate';
+import { getShowcaseData } from '../lib/showcaseContent';
 
-const apps = (await getCollection('apps'))
-  .filter((entry) => !entry.data.draft)
-  .map((entry) => entry.data)
-  .sort((a, b) => a.id - b.id);
-
-const patchNotes = (await getCollection('patchNotes'))
-  .filter((entry) => !entry.data.draft)
-  .map((entry) => entry.data)
-  .sort((a, b) => b.date.localeCompare(a.date));
-
-const posts = (await getCollection('posts'))
-  .filter((entry) => !entry.data.draft)
-  .map((entry) => entry.data)
-  .sort((a, b) => a.id - b.id);
+const { apps, patchNotes, posts } = await getShowcaseData();
 ---
 
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>앱화점 | 앱 쇼케이스 블로그</title>
-    <meta
-      name="description"
-      content="직접 만든 앱과 패치노트, 개발 기록을 정리하는 앱 쇼케이스 블로그입니다."
-    />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://jaesin463.github.io/store/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="앱화점 | 앱 쇼케이스 블로그" />
-    <meta property="og:description" content="직접 만든 앱과 패치노트, 개발 기록을 정리하는 앱 쇼케이스 블로그입니다." />
-    <meta property="og:url" content="https://jaesin463.github.io/store/" />
-    <meta property="og:site_name" content="앱화점" />
-  </head>
-  <body>
-    <AppShowcaseTemplate apps={apps} patchNotes={patchNotes} posts={posts} client:load />
-  </body>
-</html>
+<ShowcasePage canonicalPath="/">
+  <AppShowcaseTemplate apps={apps} patchNotes={patchNotes} posts={posts} initialPage="home" client:load />
+</ShowcasePage>

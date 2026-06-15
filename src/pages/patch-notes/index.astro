@@ -1,0 +1,11 @@
+---
+import ShowcasePage from '../../layouts/ShowcasePage.astro';
+import AppShowcaseTemplate from '../../components/templates/AppShowcaseTemplate';
+import { getShowcaseData } from '../../lib/showcaseContent';
+
+const { apps, patchNotes, posts } = await getShowcaseData();
+---
+
+<ShowcasePage title="패치노트 | 앱화점" description="앱화점 앱별 업데이트 내역입니다." canonicalPath="/patch-notes/">
+  <AppShowcaseTemplate apps={apps} patchNotes={patchNotes} posts={posts} initialPage="patchnotes" client:load />
+</ShowcasePage>

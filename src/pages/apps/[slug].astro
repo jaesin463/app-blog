@@ -1,0 +1,20 @@
+---
+import ShowcasePage from '../../layouts/ShowcasePage.astro';
+import AppShowcaseTemplate from '../../components/templates/AppShowcaseTemplate';
+import { getShowcaseData } from '../../lib/showcaseContent';
+
+export async function getStaticPaths() {
+  const { apps, patchNotes, posts } = await getShowcaseData();
+
+  return apps.map((app) => ({
+    params: { slug: app.slug },
+    props: { app, apps, patchNotes, posts },
+  }));
+}
+
+const { app, apps, patchNotes, posts } = Astro.props;
+---
+
+<ShowcasePage title={`${app.name} | 앱화점`} description={app.description} canonicalPath={`/apps/${app.slug}/`}>
+  <AppShowcaseTemplate apps={apps} patchNotes={patchNotes} posts={posts} initialPage="app-detail" selectedApp={app} client:load />
+</ShowcasePage>
